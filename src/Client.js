@@ -95,7 +95,7 @@ function WebcamStreamCapture() {
             <button onClick={stopWebcam}>Stop Webcam</button>
           </div>
         ) : (
-          <button onClick={startWebcam}>Start Webcam</button>
+              <button onClick={startWebcam}>Start Webcam</button>  
         )}
       </div>
       {videoUrl && (

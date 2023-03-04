@@ -92,12 +92,14 @@ function Teach() {
   }
 
   return (
-    <>
+    <div>
     <div>Teachable Machine Image Model</div>
 <button type="button" onClick={init}>Start</button>
 <div id="label-container"></div>
       <video
-        src="././output.mp4"
+        crossOrigin='anonymous'
+        //src="././output.mp4"
+        src="https://firebasestorage.googleapis.com/v0/b/uploadingfile-c6f8a.appspot.com/o/output.mp4?alt=media&token=a263a5bd-0e3b-49eb-9bb3-5d147e288c54"
         autoPlay
         style={{
           position: "absolute",
@@ -111,7 +113,7 @@ function Teach() {
           height: 480,
         }}
       />
-    </>
+    </div>
   );
 }
 
