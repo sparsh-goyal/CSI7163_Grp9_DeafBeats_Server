@@ -1,10 +1,9 @@
-import React, { useRef } from "react";
-import Webcam from "react-webcam";
 import * as tmImage from '@teachablemachine/image';
 import "./App.css";
+import { storage } from "./Firebase";
+import { ref, getDownloadURL } from "firebase/storage";
 
 function Teach() {
-
   var fAudio = new Audio("././drum/tom-1.mp3");
   var cAudio = new Audio("././drum/crash.mp3");
 
@@ -20,6 +19,14 @@ function Teach() {
   }
   // Load the image model and setup the webcam
   async function init() {
+      const fileName = document.getElementById("fileName").value;
+
+      getDownloadURL(ref(storage, fileName))
+    .then((url) => {
+      const vid = document.querySelector("video");
+      vid.setAttribute("src", url);
+  })
+
       const modelURL = URL + 'model.json';
       const metadataURL = URL + 'metadata.json';
 
@@ -77,7 +84,7 @@ function Teach() {
           labelContainer.childNodes[i].innerHTML = classPrediction;
           if(prediction[i].probability.toFixed(2) > .9)
           {
-            if (prediction[i].className == "F"){
+            if (prediction[i].className === "F"){
               // console.warn("2")
               fAudio.play();
               cAudio.pause();
@@ -94,12 +101,12 @@ function Teach() {
   return (
     <div>
     <div>Teachable Machine Image Model</div>
+    <input id="fileName" placeholder="Choose file name"></input>
 <button type="button" onClick={init}>Start</button>
 <div id="label-container"></div>
       <video
         crossOrigin='anonymous'
         //src="././output.mp4"
-        src="https://firebasestorage.googleapis.com/v0/b/uploadingfile-c6f8a.appspot.com/o/output.mp4?alt=media&token=a263a5bd-0e3b-49eb-9bb3-5d147e288c54"
         autoPlay
         style={{
           position: "absolute",
