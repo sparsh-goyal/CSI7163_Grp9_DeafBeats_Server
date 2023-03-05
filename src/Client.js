@@ -52,18 +52,16 @@ function WebcamStreamCapture() {
 
     mediaRecorder.addEventListener("stop", () => {
       const blob = new Blob(chunks, { type: "video/mp4" });
-      
-      const videoUrl = URL.createObjectURL(blob);
-      
+      setVideoUrl(URL.createObjectURL(blob));
+
       setRecording(false);
 
-      const videoName = "test.mp4";
+      const videoName = prompt("To upload to the server, enter the file name:");
       const storageRef = ref(storage, videoName)
 
       uploadBytes(storageRef, blob).then((snapshot) => {
-        console.log('Uploaded a blob or file!');
+        alert('File ' + videoName + '.mp4 was uploaded!');
       });
-
     });
 
     mediaRecorder.start();
@@ -98,9 +96,9 @@ function WebcamStreamCapture() {
               <button onClick={startWebcam}>Start Webcam</button>  
         )}
       </div>
-      {videoUrl && (
+      {/* {videoUrl && (
         <video src={videoUrl} controls={true} autoPlay={true} />
-      )}
+      )}*/}
     </div>
   );
 }
