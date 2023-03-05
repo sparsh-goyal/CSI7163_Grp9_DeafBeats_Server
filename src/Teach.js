@@ -4,12 +4,14 @@ import { storage } from "./Firebase";
 import { ref, getDownloadURL } from "firebase/storage";
 
 function Teach() {
-  var fAudio = new Audio("././drum/tom-1.mp3");
+  var aAudio = new Audio("././drum/tom-1.mp3");
+  var bAudio = new Audio("././drum/snare.mp3");
   var cAudio = new Audio("././drum/crash.mp3");
 
   // const URL = 'https://teachablemachine.withgoogle.com/models/DF6FzlHLn/';
-  const URL = 'https://teachablemachine.withgoogle.com/models/1XUcGrLn4/'
-
+  //const URL = 'https://teachablemachine.withgoogle.com/models/1XUcGrLn4/'
+  const URL = 'https://teachablemachine.withgoogle.com/models/BHM3EdcZl/'
+  
   let model, webcam, labelContainer, maxPredictions;
 
   let isIos = false; 
@@ -84,15 +86,18 @@ function Teach() {
           labelContainer.childNodes[i].innerHTML = classPrediction;
           if(prediction[i].probability.toFixed(2) > .9)
           {
-            if (prediction[i].className === "F"){
+            if (prediction[i].className === "Class 1"){
               // console.warn("2")
-              fAudio.play();
-              cAudio.pause();
+              bAudio.play();
+              //bAudio.pause();
             }
-            else{
-              // console.warn("1")
+            if (prediction[i].className === "Class 3"){
+              // console.warn("2")
+              aAudio.play();
+              //aAudio.pause();
+            }
+            if (prediction[i].className === "Class 2"){
               cAudio.play();
-              fAudio.pause();
             }
           }
         }
@@ -107,6 +112,7 @@ function Teach() {
       <video
         crossOrigin='anonymous'
         //src="././output.mp4"
+        muted
         autoPlay
         style={{
           position: "absolute",
