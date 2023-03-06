@@ -1,4 +1,3 @@
-import "./App.css";
 import { useState } from "react";
 import { storage } from "./Firebase";
 import { ref, uploadBytes } from "firebase/storage";

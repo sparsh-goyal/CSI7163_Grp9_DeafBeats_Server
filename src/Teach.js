@@ -1,5 +1,4 @@
 import * as tmImage from '@teachablemachine/image';
-import "./App.css";
 import { storage } from "./Firebase";
 import { ref, getDownloadURL } from "firebase/storage";
 
