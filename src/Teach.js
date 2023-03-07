@@ -7,10 +7,7 @@ function Teach() {
   var bAudio = new Audio("././drum/snare.mp3");
   var cAudio = new Audio("././drum/crash.mp3");
 
-  // const URL = 'https://teachablemachine.withgoogle.com/models/DF6FzlHLn/';
-  //const URL = 'https://teachablemachine.withgoogle.com/models/1XUcGrLn4/'
-  // const URL = 'https://teachablemachine.withgoogle.com/models/BHM3EdcZl/'
-  const URL = 'https://teachablemachine.withgoogle.com/models/M2wVnYIDK/'
+  const URL = 'https://teachablemachine.withgoogle.com/models/wm_CD6ny1/'
 
   let model, labelContainer, maxPredictions;
 
@@ -54,14 +51,19 @@ function Teach() {
         prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
       labelContainer.childNodes[i].innerHTML = classPrediction;
       if (prediction[i].probability.toFixed(2) > .9) {
-        if (prediction[i].className === "Class 2") {
+        if (prediction[i].className === "A") {
           aAudio.play();
         }
-        if (prediction[i].className === "Class 3") {
+        if (prediction[i].className === "B") {
           bAudio.play();
         }
-        if (prediction[i].className === "Class 1") {
+        if (prediction[i].className === "C") {
           cAudio.play();
+        }
+        if (prediction[i].className === "empty") {
+          aAudio.pause();
+          bAudio.pause();
+          cAudio.pause();
         }
       }
     }
