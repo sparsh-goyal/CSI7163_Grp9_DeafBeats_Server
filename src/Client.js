@@ -12,6 +12,7 @@ function WebcamStreamCapture() {
 
   const startWebcam = async () => {
     try {
+      // access webcam
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: false,
@@ -19,6 +20,7 @@ function WebcamStreamCapture() {
       setStream(stream);
       setVideoUrl(null);
 
+      // display the stream from webcam
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
@@ -41,30 +43,76 @@ function WebcamStreamCapture() {
   const startRecording = () => {
     if (!stream) return;
 
-    const mediaRecorder = new MediaRecorder(stream);
-    const chunks = [];
 
-    mediaRecorder.addEventListener("dataavailable", (event) => {
+    // var optionsVp8 = {
+    //   mimeType: 'video/webm',
+    //   codecs: 'vp8'
+    // }
+
+    var optionsVp9 = {
+      mimeType: 'video/webm',
+      codecs: 'vp9'
+    }
+
+    // record video from the browser
+    //const mediaRecorderVp8 = new MediaRecorder(stream, optionsVp8);
+    const mediaRecorderVp9 = new MediaRecorder(stream, optionsVp9);
+
+    // saves data in chunks
+   // const chunks = [];
+    const chunks1 = [];
+    // mediaRecorderVp8.addEventListener("dataavailable", (event) => {
+    //   if (event.data.size > 0) {
+    //     chunks.push(event.data);
+    //   }
+    // });
+
+    mediaRecorderVp9.addEventListener("dataavailable", (event) => {
       if (event.data.size > 0) {
-        chunks.push(event.data);
+        chunks1.push(event.data);
       }
     });
 
-    mediaRecorder.addEventListener("stop", () => {
-      const blob = new Blob(chunks, { type: "video/mp4" });
+    // mediaRecorderVp8.addEventListener("stop", () => {
+    //   // save chunks as Blob object
+    //   var startTime = new Date()
+    //   const blob = new Blob(chunks, { type: "video/webm" });
+    //   setVideoUrl(URL.createObjectURL(blob));
+    //   var elapsedTime = new Date() - startTime
+    //   console.warn("Time to encode file using VP8: " + elapsedTime + " ms")
+
+    //   setRecording(false);
+
+    //   // configure VP8 file
+    //   const videoName = prompt("To upload to the server, enter the vp8 webm file name:");
+    //   const storageRef = ref(storage, videoName)
+    //   // send to the firebase server
+    //   uploadBytes(storageRef, blob).then(() => {
+    //     alert('VP8 File ' + videoName + '.webm was uploaded!');
+    //   });
+    // });
+
+    mediaRecorderVp9.addEventListener("stop", () => {
+      // save chunks as Blob object
+      var startTime = new Date()
+      const blob = new Blob(chunks1, { type: "video/webm" });
       setVideoUrl(URL.createObjectURL(blob));
+      var elapsedTime = new Date() - startTime
+      console.warn("Time to encode file using VP9: " + elapsedTime + " ms")
 
       setRecording(false);
 
-      const videoName = prompt("To upload to the server, enter the file name:");
+      // configure VP9 file
+      const videoName = prompt("To upload to the server, enter the vp9 webm file name:");
       const storageRef = ref(storage, videoName)
-
-      uploadBytes(storageRef, blob).then((snapshot) => {
-        alert('File ' + videoName + '.mp4 was uploaded!');
+      // send to the firebase server
+      uploadBytes(storageRef, blob).then(() => {
+        alert('VP9 File ' + videoName + '.webm was uploaded!');
       });
     });
 
-    mediaRecorder.start();
+    //mediaRecorderVp8.start();
+    mediaRecorderVp9.start();
     setRecording(true);
   };
 
@@ -73,7 +121,7 @@ function WebcamStreamCapture() {
 
     const tracks = stream.getTracks();
     tracks.forEach((track) => track.stop());
-    
+
   };
 
   return (
@@ -86,14 +134,14 @@ function WebcamStreamCapture() {
             {recording ? (
               <button onClick={stopRecording}>Stop Recording</button>
             ) : (
-                <div>
+              <div>
                 <button onClick={startRecording}>Start Recording</button>
-                </div>
+              </div>
             )}
             <button onClick={stopWebcam}>Stop Webcam</button>
           </div>
         ) : (
-              <button onClick={startWebcam}>Start Webcam</button>  
+          <button onClick={startWebcam}>Start Webcam</button>
         )}
       </div>
       {/* {videoUrl && (
