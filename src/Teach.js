@@ -18,7 +18,7 @@ function Teach() {
     getDownloadURL(ref(storage, fileName))
       .then((url) => {
         const vid = document.querySelector("video");
-        vid.setAttribute("src", url);
+        vid.setAttribute("src", url); //"https://firebasestorage.googleapis.com/v0/b/uploadingfile-c6f8a.appspot.com/o/testMaster?alt=media&token=0ca59c15-5259-4a00-930d-fa201b2df668"
       })
 
     const modelURL = URL + 'model.json';
@@ -78,7 +78,6 @@ function Teach() {
       <div id="label-container"></div>
       <video
         crossOrigin='anonymous'
-        //src="././output.mp4"
         muted
         autoPlay
         style={{
