@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
+  //luciana
   // apiKey: "AIzaSyAwP4gllGuO5pCmUwycUKebgIASVtEv9oc",
   // authDomain: "uploadingfile-c6f8a.firebaseapp.com",
   // projectId: "uploadingfile-c6f8a",
