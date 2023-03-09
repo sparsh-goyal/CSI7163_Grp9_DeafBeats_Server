@@ -5,7 +5,7 @@ import "./Teach.css";
 import { useState } from "react";
 function Teach() {
   var aAudio = new Audio("././piano/A.mp3");
-  var bAudio = new Audio("././piano/B.mp3");
+  var bAudio = new Audio("././piano/G.mp3");
   var cAudio = new Audio("././piano/C.mp3");
 
   const [isAddMusicBtnClicked, setAddMusicBtnClicked] = useState(false);
